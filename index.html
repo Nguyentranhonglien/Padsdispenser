@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nhận Băng Vệ Sinh</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      background: linear-gradient(120deg, #ffe6f0, #ffd9e8);
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      color: #d6336c;
+      margin-bottom: 20px;
+      font-size: 2em;
+    }
+
+    /* Container quảng cáo */
+    #adContainer {
+      max-width: 400px;
+      margin: 0 auto 30px auto;
+      padding: 15px;
+    }
+    #adContainer img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    /* Nút nhận băng */
+    #dispenseBtn {
+      padding: 15px 50px;
+      font-size: 20px;
+      font-weight: bold;
+      background: #d6336c;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+      transition: background 0.3s, transform 0.2s, opacity 0.5s;
+      display: block;
+      margin: 0 auto;
+      opacity: 0; /* ẩn ban đầu */
+    }
+    #dispenseBtn.visible {
+      opacity: 1; /* hiện ra */
+    }
+    #dispenseBtn:hover {
+      background: #ff4d91;
+      transform: scale(1.05);
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+      h1 { font-size: 1.5em; }
+      #dispenseBtn { font-size: 18px; padding: 12px 40px; }
+    }
+
+  </style>
+</head>
+<body>
+
+<h1>Nhận Băng Vệ Sinh Miễn Phí</h1>
+
+<div style="height: 400px;"></div>
+
+<div id="adContainer">
+  <img src="https://i.pinimg.com/736x/c8/8b/a9/c88ba92915c4f51b159afa99ee7649c1.jpg" alt="Quảng cáo">
+</div>
+
+<div style="height: 500px;"></div>
+
+<button id="dispenseBtn">Nhấn để nhận băng</button>
+
+<script>
+
+// ===== Button nhấn để nhả bvs =====
+const btn = document.getElementById('dispenseBtn');
+
+btn.onclick = () => {
+  btn.disabled = true;
+  btn.innerText = "Đang nhả băng...";
+
+  const AUTH_TOKEN = 'YOUR_AUTH_TOKEN'; // Thay bằng Auth Token ESP32
+  const VPIN = 'V1';
+  const url = `https://blynk.cloud/external/api/update?token=${AUTH_TOKEN}&${VPIN}=1`;
+
+  fetch(url, { method: 'GET' })
+    .then(res => res.text())
+    .then(data => {
+      alert('Máy đã nhả băng thành công!');
+      btn.innerText = 'Nhấn để nhận băng';
+      btn.disabled = false;
+    })
+    .catch(err => {
+      alert('Lỗi kết nối Blynk. Vui lòng thử lại.');
+      btn.innerText = 'Nhấn để nhận băng';
+      btn.disabled = false;
+    });
+};
+
+// ===== Hiển thị nút khi cuộn tới cuối trang =====
+window.addEventListener('scroll', () => {
+  // Tổng chiều cao trang
+  const scrollHeight = document.documentElement.scrollHeight;
+  // Chiều cao khung nhìn
+  const clientHeight = document.documentElement.clientHeight;
+  // Vị trí hiện tại khi cuộn
+    const scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0;
+
+  // Nếu cuộn tới cuối (có thể ±5px cho margin an toàn)
+  if(scrollTop + clientHeight >= scrollHeight - 5){
+    btn.classList.add('visible');
+  } else {
+    btn.classList.remove('visible');
+  }
+});
+</script>
+
+</body>
+</html>
+
+
