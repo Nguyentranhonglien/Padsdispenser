@@ -46,6 +46,10 @@
       transition: background 0.3s, transform 0.2s, opacity 0.5s;
       display: block;
       margin: 0 auto;
+      opacity: 0; /* ẩn ban đầu */
+    }
+    #dispenseBtn.visible {
+      opacity: 1; /* hiện ra */
     }
     #dispenseBtn:hover {
       background: #ff4d91;
@@ -64,13 +68,13 @@
 
 <h1>Nhận Băng Vệ Sinh Miễn Phí</h1>
 
-<div style="height: 200px;"></div>
+<div style="height: 400px;"></div>
 
 <div id="adContainer">
   <img src="https://i.pinimg.com/736x/c8/8b/a9/c88ba92915c4f51b159afa99ee7649c1.jpg" alt="Quảng cáo">
 </div>
 
-<div style="height: 200px;"></div>
+<div style="height: 500px;"></div>
 
 <button id="dispenseBtn">Nhấn để nhận băng</button>
 
@@ -85,7 +89,7 @@ btn.onclick = () => {
 
   const AUTH_TOKEN = '0CEGlqvwZIyKMMZLETtVHP8kPvmTZV6D'; // Thay bằng Auth Token ESP32
   const VPIN = 'V1';
-  const url = `https://blynk.cloud/external/api/update?token=${0CEGlqvwZIyKMMZLETtVHP8kPvmTZV6D}&${VPIN}=1`;
+  const url = `https://blynk.cloud/external/api/update?token=${AUTH_TOKEN}&${VPIN}=1`;
 
   fetch(url, { method: 'GET' })
     .then(res => res.text())
@@ -101,7 +105,25 @@ btn.onclick = () => {
     });
 };
 
+// ===== Hiển thị nút khi cuộn tới cuối trang =====
+window.addEventListener('scroll', () => {
+  // Tổng chiều cao trang
+  const scrollHeight = document.documentElement.scrollHeight;
+  // Chiều cao khung nhìn
+  const clientHeight = document.documentElement.clientHeight;
+  // Vị trí hiện tại khi cuộn
+    const scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0;
 
+  // Nếu cuộn tới cuối (có thể ±5px cho margin an toàn)
+  if(scrollTop + clientHeight >= scrollHeight - 5){
+    btn.classList.add('visible');
+  } else {
+    btn.classList.remove('visible');
+  }
 });
 </script>
 
