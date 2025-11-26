@@ -46,10 +46,6 @@
       transition: background 0.3s, transform 0.2s, opacity 0.5s;
       display: block;
       margin: 0 auto;
-      opacity: 0; /* ẩn ban đầu */
-    }
-    #dispenseBtn.visible {
-      opacity: 1; /* hiện ra */
     }
     #dispenseBtn:hover {
       background: #ff4d91;
@@ -105,25 +101,7 @@ btn.onclick = () => {
     });
 };
 
-// ===== Hiển thị nút khi cuộn tới cuối trang =====
-window.addEventListener('scroll', () => {
-  // Tổng chiều cao trang
-  const scrollHeight = document.documentElement.scrollHeight;
-  // Chiều cao khung nhìn
-  const clientHeight = document.documentElement.clientHeight;
-  // Vị trí hiện tại khi cuộn
-    const scrollTop =
-        window.pageYOffset ||
-        document.documentElement.scrollTop ||
-        document.body.scrollTop ||
-        0;
 
-  // Nếu cuộn tới cuối (có thể ±5px cho margin an toàn)
-  if(scrollTop + clientHeight >= scrollHeight - 5){
-    btn.classList.add('visible');
-  } else {
-    btn.classList.remove('visible');
-  }
 });
 </script>
 
