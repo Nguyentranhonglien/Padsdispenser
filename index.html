@@ -87,9 +87,9 @@ btn.onclick = () => {
   btn.disabled = true;
   btn.innerText = "Đang nhả băng...";
 
-  const AUTH_TOKEN = 'YOUR_AUTH_TOKEN'; // Thay bằng Auth Token ESP32
+  const AUTH_TOKEN = '0CEGlqvwZIyKMMZLETtVHP8kPvmTZV6D'; // Thay bằng Auth Token ESP32
   const VPIN = 'V1';
-  const url = `https://blynk.cloud/external/api/update?token=${AUTH_TOKEN}&${VPIN}=1`;
+  const url = `https://blynk.cloud/external/api/update?token=${0CEGlqvwZIyKMMZLETtVHP8kPvmTZV6D}&${VPIN}=1`;
 
   fetch(url, { method: 'GET' })
     .then(res => res.text())
